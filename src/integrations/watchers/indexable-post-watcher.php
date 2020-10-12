@@ -166,10 +166,6 @@ class Indexable_Post_Watcher implements Integration_Interface {
 			$this->update_relations( $post );
 		}
 
-		if ( $post ) {
-			$this->link_builder->build( $updated_indexable, $post->post_content );
-		}
-
 		$this->update_has_public_posts( $updated_indexable );
 
 		$updated_indexable->save();
@@ -214,6 +210,10 @@ class Indexable_Post_Watcher implements Integration_Interface {
 		try {
 			$indexable = $this->repository->find_by_id_and_type( $post_id, 'post', false );
 			$this->builder->build_for_id_and_type( $post_id, 'post', $indexable );
+
+			$post = $this->post->get_post( $post_id );
+			$this->link_builder->build( $indexable, $post->post_content );
+			$indexable->save();
 		} catch ( Exception $exception ) {
 			$this->logger->log( LogLevel::ERROR, $exception->getMessage() );
 		}
