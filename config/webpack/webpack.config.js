@@ -7,8 +7,8 @@ const paths = require( "./paths" );
 const BundleAnalyzerPlugin = require( "webpack-bundle-analyzer" ).BundleAnalyzerPlugin;
 const MiniCssExtractPlugin = require( "mini-css-extract-plugin" );
 
-const { externals, yoastExternals, wordpressExternals } = require( './externals' );
-const { YOAST_PACKAGE_NAMESPACE } = require( './externals' );
+const { externals, yoastExternals, wordpressExternals } = require( "./externals" );
+const { YOAST_PACKAGE_NAMESPACE } = require( "./externals" );
 
 const root = path.join( __dirname, "../../" );
 const mainEntry = mapValues( paths.entry, entry => {
@@ -168,9 +168,7 @@ module.exports = function( env ) {
 		},
 		externals,
 		optimization: {
-			runtimeChunk: {
-				name: "commons",
-			},
+			runtimeChunk: false,
 		},
 	};
 
@@ -206,9 +204,6 @@ module.exports = function( env ) {
 				"babel-polyfill": "./js/src/externals/babel-polyfill.js",
 			},
 			plugins: addBundleAnalyzer( plugins ),
-			optimization: {
-				runtimeChunk: false,
-			},
 		},
 		// Config for the analysis web worker.
 		{
@@ -224,9 +219,6 @@ module.exports = function( env ) {
 				analysis: "./js/src/externals/analysis.js",
 			},
 			plugins: addBundleAnalyzer( plugins ),
-			optimization: {
-				runtimeChunk: false,
-			},
 		},
 		// Config for files that should only use externals available in the web worker context.
 		{
@@ -236,9 +228,6 @@ module.exports = function( env ) {
 				"used-keywords-assessment": "./js/src/used-keywords-assessment.js",
 			},
 			plugins: addBundleAnalyzer( plugins ),
-			optimization: {
-				runtimeChunk: false,
-			},
 		},
 	];
 
@@ -247,17 +236,17 @@ module.exports = function( env ) {
 	 *
 	 * These all need to have all -other- externals configured, but not their self.
 	 */
-	for (const [key, value] of Object.entries(yoastExternals)) {
-		const yoastExternalsExcludingCurrent = Object.assign({}, yoastExternals);
+	for ( const [ key, value ] of Object.entries( yoastExternals ) ) {
+		const yoastExternalsExcludingCurrent = Object.assign( {}, yoastExternals );
 		// Remove the current external to avoid self-reference.
-		delete yoastExternalsExcludingCurrent[key];
+		delete yoastExternalsExcludingCurrent[ key ];
 
-		const packageName = key.replace( YOAST_PACKAGE_NAMESPACE, '' );
+		const packageName = key.replace( YOAST_PACKAGE_NAMESPACE, "" );
 
-		config.push({
+		config.push( {
 			...base,
 			entry: {
-				[packageName]: "./js/src/externals/yoast/" + packageName + ".js",
+				[ packageName ]: "./js/src/externals/yoast/" + packageName + ".js",
 			},
 			output: {
 				path: path.resolve(),
@@ -269,13 +258,13 @@ module.exports = function( env ) {
 				...yoastExternalsExcludingCurrent,
 				...wordpressExternals,
 			},
-			plugins: addBundleAnalyzer([
+			plugins: addBundleAnalyzer( [
 				...plugins,
-			]),
+			] ),
 			optimization: {
 				runtimeChunk: false,
 			},
-		});
+		} );
 	}
 
 	if ( env.environment === "development" ) {
