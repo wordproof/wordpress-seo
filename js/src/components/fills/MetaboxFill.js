@@ -16,6 +16,7 @@ import AdvancedSettings from "../../containers/AdvancedSettings";
 import SocialMetadataPortal from "../portals/SocialMetadataPortal";
 import SchemaTabContainer from "../../containers/SchemaTab";
 import SEMrushRelatedKeyphrases from "../../containers/SEMrushRelatedKeyphrases";
+import { PersistentDismissableAlert } from "@yoast/components";
 
 /* eslint-disable complexity */
 /**
@@ -30,6 +31,11 @@ import SEMrushRelatedKeyphrases from "../../containers/SEMrushRelatedKeyphrases"
 export default function MetaboxFill( { settings } ) {
 	return (
 		<Fill name="YoastMetabox">
+
+			<PersistentDismissableAlert id="videoChanges154">
+				Here I am, please make me disappear!
+			</PersistentDismissableAlert>
+
 			<SidebarItem renderPriority={ 1 }>
 				<Warning />
 			</SidebarItem>
