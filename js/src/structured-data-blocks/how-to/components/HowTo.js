@@ -11,7 +11,7 @@ import buildDurationString from "../utils/buildDurationString";
 import appendSpace from "../../../components/higherorder/appendSpace";
 
 const { RichText, InspectorControls } = window.wp.blockEditor;
-const { IconButton, PanelBody, TextControl, ToggleControl } = window.wp.components;
+const { Button, PanelBody, TextControl, ToggleControl } = window.wp.components;
 const { Component, renderToString, createRef } = window.wp.element;
 
 const RichTextWithAppendedSpace = appendSpace( RichText.Content );
@@ -453,13 +453,13 @@ export default class HowTo extends Component {
 	 */
 	getAddStepButton() {
 		return (
-			<IconButton
+			<Button
 				icon="insert"
 				onClick={ this.onAddStepButtonClick }
 				className="schema-how-to-add-step"
 			>
 				{ __( "Add step", "wordpress-seo" ) }
-			</IconButton>
+			</Button>
 		);
 	}
 
@@ -601,14 +601,14 @@ export default class HowTo extends Component {
 
 		if ( ! attributes.hasDuration ) {
 			return (
-				<IconButton
+				<Button
 					onClick={ this.addDuration }
 					className="schema-how-to-duration-button"
 					ref={ this.addDurationButton }
 					icon="insert"
 				>
 					{ __( "Add total time", "wordpress-seo" ) }
-				</IconButton>
+				</Button>
 			);
 		}
 
@@ -665,7 +665,7 @@ export default class HowTo extends Component {
 							onChange={ this.onChangeMinutes }
 							placeholder="MM"
 						/>
-						<IconButton
+						<Button
 							className="schema-how-to-duration-delete-button"
 							icon="trash"
 							label={ __( "Delete total time", "wordpress-seo" ) }
