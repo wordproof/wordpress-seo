@@ -5,8 +5,7 @@ import { isShallowEqualObjects } from "@wordpress/is-shallow-equal";
 
 const { Component } = window.wp.element;
 const { IconButton } = window.wp.components;
-const { RichText } = window.wp.editor;
-const { MediaUpload } = window.wp.blockEditor;
+const { RichText, MediaUpload } = window.wp.blockEditor;
 
 
 /* Internal dependencies */

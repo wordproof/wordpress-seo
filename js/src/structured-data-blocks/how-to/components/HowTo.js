@@ -10,8 +10,7 @@ import HowToStep from "./HowToStep";
 import buildDurationString from "../utils/buildDurationString";
 import appendSpace from "../../../components/higherorder/appendSpace";
 
-const { RichText } = window.wp.editor;
-const { InspectorControls } = window.wp.blockEditor;
+const { RichText, InspectorControls } = window.wp.blockEditor;
 const { IconButton, PanelBody, TextControl, ToggleControl } = window.wp.components;
 const { Component, renderToString, createRef } = window.wp.element;
 
