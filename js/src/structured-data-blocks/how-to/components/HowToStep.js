@@ -335,7 +335,7 @@ export default class HowToStep extends Component {
 					placeholder={ __( "Enter a step title", "wordpress-seo" ) }
 					unstableOnFocus={ this.onFocusTitle }
 					keepPlaceholderOnFocus={ true }
-					formattingControls={ [ "italic", "strikethrough", "link" ] }
+					allowedFormats={ [ "core/italic", "core/strikethrough", "core/link" ] }
 				/>
 				<RichTextWithAppendedSpace
 					className="schema-how-to-step-text"

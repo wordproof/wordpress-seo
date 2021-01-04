@@ -347,7 +347,7 @@ export default class Question extends Component {
 					unstableOnFocus={ this.onFocusQuestion }
 					placeholder={ __( "Enter a question", "wordpress-seo" ) }
 					keepPlaceholderOnFocus={ true }
-					formattingControls={ [ "italic", "strikethrough", "link" ] }
+					allowedFormats={ [ "core/italic", "core/strikethrough", "core/link" ] }
 				/>
 				<RichText
 					className="schema-faq-answer"
