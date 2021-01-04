@@ -6,7 +6,8 @@ import { isShallowEqualObjects } from "@wordpress/is-shallow-equal";
 
 const { Component } = window.wp.element;
 const { IconButton } = window.wp.components;
-const { RichText, MediaUpload } = window.wp.editor;
+const { RichText } = window.wp.editor;
+const { MediaUpload } = window.wp.blockEditor;
 
 const RichTextWithAppendedSpace = appendSpace( RichText );
 const RichTextContentWithAppendedSpace = appendSpace( RichText.Content );
