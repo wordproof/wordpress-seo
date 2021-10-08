@@ -222,7 +222,10 @@ class Actions {
 			return 0;
 		}
 
-		\system( 'composer check-cs-warnings -- ' . \implode( ' ', \array_map( 'escapeshellarg', $php_files ) ), $exit_code );
+		\system(
+			'composer check-cs-warnings -- ' . \implode( ' ', \array_map( 'escapeshellarg', $php_files ) ) . ' --report-full --report-checkstyle=./phpcs-report.xml',
+			$exit_code
+		);
 
 		return $exit_code;
 	}
@@ -336,7 +339,11 @@ TPL;
 		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- Non-WP context, this is fine.
 		@\passthru( $command, $return );
 
-		if ( \defined( 'YOASTCS_ABOVE_THRESHOLD' ) && \YOASTCS_ABOVE_THRESHOLD === true ) {
+		if ( \defined( 'YOASTCS_ABOVE_THRESHOLD' ) && \YOASTCS_ABOVE_THRESHOLD === true
+			// Don't run the branch check in CI/GH Actions as it prevents the errors from being show inline.
+			// The GH Actions script will run this via a separate script step.
+			&& \getenv( 'CI' ) === false
+		) {
 			echo "\n";
 			echo "Running check-branch-cs.\n";
 			echo "This might show problems on untouched lines. Focus on the lines you've changed first.\n";
