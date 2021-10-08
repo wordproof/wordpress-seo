@@ -333,6 +333,8 @@ TPL;
 
 	/**
 	 * Checks if the CS errors and warnings are below or at thresholds.
+	 *
+	 * @return int Exit code
 	 */
 	public static function check_cs_thresholds() {
 		echo "Running coding standards checks, this may take some time.\n";
@@ -354,7 +356,7 @@ TPL;
 			@\passthru( 'composer check-branch-cs' );
 		}
 
-		exit( ( ( \defined( 'YOASTCS_ABOVE_THRESHOLD' ) && \YOASTCS_ABOVE_THRESHOLD === true ) || $return > 2 ) ? $return : 0 );
+		return ( ( ( \defined( 'YOASTCS_ABOVE_THRESHOLD' ) && \YOASTCS_ABOVE_THRESHOLD === true ) || $return > 2 ) ? $return : 0 );
 	}
 
 	/**
