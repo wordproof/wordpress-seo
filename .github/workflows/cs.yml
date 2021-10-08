@@ -41,6 +41,7 @@ jobs:
 
       # Check the codestyle of the files against a threshold of expected errors and warnings.
       - name: Check PHP code style against the threshold
+        continue-on-error: true
         run: composer check-cs-threshold
 
       # Check the codestyle of the files changes in the branch.
@@ -49,6 +50,7 @@ jobs:
       # @link https://github.com/staabm/annotate-pull-request-from-checkstyle/
       - name: Check PHP code style for the changes made in the branch only
         if: ${{ failure() }}
+        continue-on-error: true
         run: composer check-branch-cs
 
       - name: Show PHPCS results in PR
