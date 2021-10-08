@@ -159,9 +159,10 @@ class Actions {
 	 *
 	 * @return void
 	 */
-	public static function lint_staged() {
-		exit( self::lint_changed_files( '--staged' ) );
-	}
+	public static function lint_staged()
+	{
+		exit(self::lint_changed_files('--staged'));
+}
 
 	/**
 	 * Runs PHPCS on the staged files.
