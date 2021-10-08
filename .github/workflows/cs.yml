@@ -41,7 +41,6 @@ jobs:
 
       # Check the codestyle of the files against a threshold of expected errors and warnings.
       - name: Check PHP code style against the threshold
-        continue-on-error: true
         run: composer check-cs-threshold
 
       # Check the codestyle of the files changes in the branch.
