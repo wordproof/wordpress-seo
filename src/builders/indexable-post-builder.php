@@ -122,7 +122,10 @@ class Indexable_Post_Builder {
 		// Set additional meta-robots values.
 		$indexable->is_robots_nofollow = ( $this->get_meta_value( $post_id, 'meta-robots-nofollow' ) === '1' );
 		$noindex_advanced              = $this->get_meta_value( $post_id, 'meta-robots-adv' );
-		$meta_robots                   = \explode( ',', $noindex_advanced );
+		if ( ! is_string( $noindex_advanced ) ) {
+			$noindex_advanced = '';
+		}
+		$meta_robots = \explode( ',', $noindex_advanced );
 		foreach ( $this->get_robots_options() as $meta_robots_option ) {
 			$indexable->{'is_robots_' . $meta_robots_option} = \in_array( $meta_robots_option, $meta_robots, true ) ? 1 : null;
 		}
