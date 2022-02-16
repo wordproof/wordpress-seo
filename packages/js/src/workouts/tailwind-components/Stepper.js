@@ -102,7 +102,7 @@ function EditButton( { children, ...restProps } ) {
 
 	return <button
 		onClick={ editFunction }
-		className="yst-button--secondary yst-button--small"
+		className="yst-button yst-button--secondary yst-button--small"
 		{ ...restProps }
 	>
 		{ children }
@@ -205,7 +205,7 @@ Content.propTypes = {
  */
 export default function Stepper( { children, setActiveStepIndex, activeStepIndex } ) {
 	return (
-		<ol>
+		<ol className="yst-list-none">
 			{ children.map( ( child, stepIndex ) => {
 				return <li key={ `${ child.props.name }-${ stepIndex }` } className={ ( stepIndex === children.length - 1 ? "" : "yst-pb-8" ) + " yst-mb-0 yst-relative" }>
 					<StepperContext.Provider value={ { stepIndex, activeStepIndex, setActiveStepIndex, lastStepIndex: children.length - 1 } }>

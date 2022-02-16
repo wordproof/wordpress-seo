@@ -407,7 +407,7 @@ function PersonalPreferencesStep( { state, setTracking, isTrackingOptionSelected
  */
 const FinishStep = () => <Fragment>
 	<p className="yst-mb-6">You have finished all the things, yay!</p>
-	<button className="yst-button--primary">{ __( "Check out your Indexables page", "wordpress-seo" ) }</button>
+	<button className="yst-button yst-button--primary">{ __( "Check out your Indexables page", "wordpress-seo" ) }</button>
 </Fragment>;
 
 /* eslint-enable max-len, react/prop-types */
@@ -873,7 +873,7 @@ export function ConfigurationWorkout( { finishSteps, reviseStep, toggleWorkout, 
 			<UnsavedChangesModal hasUnsavedChanges={ state.editedSteps.includes( activeStepIndex + 1 ) } />
 
 			<button
-				className="yst-button--danger yst-mt-4"
+				className="yst-button yst-button--danger yst-mt-4"
 				onClick={ () => {
 					setHideOriginal( prevState => ! prevState  );
 				} }
