@@ -49,7 +49,8 @@ jobs:
 
       - name: Install Composer dependencies and generate vendor_prefixed directory
         uses: ramsey/composer-install@v2
-
+## TODO: this needs to be changed
+## Either use the PHAR or remove the problem dependencies and do a normal install
       # Moving the necessary tools to no-dev prevents dependency hell due to the lock file containing
       # packages locked at versions incompatible with the full range of supported PHP versions.
       # This move needs to happen while still on PHP 7.2 as otherwise Composer will reject it.
