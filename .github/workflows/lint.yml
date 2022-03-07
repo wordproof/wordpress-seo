@@ -68,7 +68,7 @@ jobs:
       # - The test utilities are dev dependencies. Removing these, so we don't need to work around
       #   the PHP version restrictions set by PHPUnit.
       - name: Delete dependencies which are not cross-version compatible
-        run: composer remove --dev humbug/php-scoper league/oauth2-client yoast/wp-test-utils phpunit/phpunit
+        run: composer remove --dev --no-update humbug/php-scoper league/oauth2-client yoast/wp-test-utils phpunit/phpunit
 
 #      - name: Regenerate the Composer autoload file
 #        run: composer du
