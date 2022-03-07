@@ -24,6 +24,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
         # Lint against the highest/lowest supported versions of each PHP major.
         # And also do a run against "nightly" (the current dev version of PHP).

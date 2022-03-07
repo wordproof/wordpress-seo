@@ -13,7 +13,7 @@ use Yoast\WP\SEO\Tests\Unit\TestCase;
 class Badge_Group_Names_Test extends TestCase {
 
 	/* We'll be testing with this existing group. */
-	const TESTING_GROUP = Badge_Group_Names::GROUP_GLOBAL_TEMPLATES;
+	const TESTING_GROUP = Badge_Group_Names::GROUP_GLOBAL_TEMPLATES
 
 	/* The group we're testing will no longer be considered new from this version onwards. */
 	const VERSION_NO_LONGER_NEW = '16.7';
