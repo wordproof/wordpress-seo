@@ -68,7 +68,7 @@ jobs:
       # - The test utilities are dev dependencies. Removing these, so we don't need to work around
       #   the PHP version restrictions set by PHPUnit.
       - name: Delete dependencies which are not cross-version compatible
-        run: composer remove --dev --no-update humbug/php-scoper league/oauth2-client yoast/wp-test-utils phpunit/phpunit
+        run: composer remove --dev --no-scripts humbug/php-scoper league/oauth2-client
 
 #      - name: Regenerate the Composer autoload file
 #        run: composer du
@@ -98,10 +98,17 @@ jobs:
 
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-composer-dependencies
-      - name: "Install Composer dependencies"
+      - name: Install Composer dependencies (PHP < 8.0)
+        if: ${{ matrix.php_version < '8.0' }}
         uses: ramsey/composer-install@v2
         with:
           composer-options: "--no-scripts"
+
+      - name: Install Composer dependencies (PHP 8.0+)
+        if: ${{ matrix.php_version >= '8.0' }}
+        uses: ramsey/composer-install@v2
+        with:
+          composer-options: "--no-scripts --ignore-platform-req=php"
 
       - name: Lint against parse errors
         run: composer lint -- --checkstyle | cs2pr
