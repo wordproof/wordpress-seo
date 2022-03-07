@@ -96,6 +96,11 @@ jobs:
           coverage: none
           tools: cs2pr
 
+      # We don't need to remove and reinstall the Composer dependencies as
+      # the only thing we'll use is the PHP-Parallel-Lint package (PHP 5.3+)
+      # and that means the package is compatible with all supported PHP versions,
+      # so we can just use the version installed on PHP 7.2.
+
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-composer-dependencies
 #      - name: Install Composer dependencies
