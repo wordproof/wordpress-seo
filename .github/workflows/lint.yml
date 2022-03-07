@@ -98,14 +98,7 @@ jobs:
 
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-composer-dependencies
-      - name: Install Composer dependencies (PHP < 8.0)
-        if: ${{ matrix.php_version < '8.0' }}
-        uses: ramsey/composer-install@v2
-        with:
-          composer-options: "--no-scripts"
-
-      - name: Install Composer dependencies (PHP 8.0+)
-        if: ${{ matrix.php_version >= '8.0' }}
+      - name: Install Composer dependencies
         uses: ramsey/composer-install@v2
         with:
           composer-options: "--no-scripts --ignore-platform-req=php"
