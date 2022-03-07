@@ -3,12 +3,12 @@ name: Lint
 on:
   # Run on pushes to select branches and on all pull requests.
   push:
-    branches:
-      - master
-      - trunk
-      - 'release/**'
-      - 'hotfix/[0-9]+.[0-9]+*'
-      - 'feature/**'
+#    branches:
+#      - master
+#      - trunk
+#      - 'release/**'
+#      - 'hotfix/[0-9]+.[0-9]+*'
+#      - 'feature/**'
   pull_request:
   # Allow manually triggering the workflow.
   workflow_dispatch:
@@ -41,6 +41,8 @@ jobs:
       # The prefix-dependencies task only works on PHP 7.2 (and higher) and we need to prefix
       # the dependencies which are included in the distributed code to make sure there
       # are no parse errors in the adjusted code.
+      # Dependency injection compilation only works on PHP 7+.
+      # It makes use of reflection-based PHP code that only works on PHP 7+.
       - name: Install PHP 7.x for generating the vendor_prefixed directory
         uses: shivammathur/setup-php@v2
         with:
@@ -49,13 +51,39 @@ jobs:
 
       - name: Install Composer dependencies and generate vendor_prefixed directory
         uses: ramsey/composer-install@v2
+
+
+
+
+      # The prefix-dependencies task only works on PHP 7.1 and we need to prefix our dependencies to make sure there
+      # are no parse errors in the adjusted code.
+      # So we initially install PHP 7.1, do a full install and then remove the packages related to the prefixing.
+      # After this, we switch to the PHP version in which we want to run the linting and delete the vendor directory.
+
+
+      # Remove packages which are not PHP cross-version compatible.
+      # - humbug/php-scoper is only needed to actually do the prefixing, so won't be shipped anyway.
+      # - league/oauth2-client and its dependencies *are* the packages being prefixed, so linting the
+      #   prefixed versions is sufficient.
+      # - The test utilities are dev dependencies. Removing these, so we don't need to work around
+      #   the PHP version restrictions set by PHPUnit.
+      - name: Delete dependencies which are not cross-version compatible
+        run: composer remove --dev humbug/php-scoper league/oauth2-client yoast/wp-test-utils phpunit/phpunit
+
+#      - name: Regenerate the Composer autoload file
+#        run: composer du
+
+
+
+
+
 ## TODO: this needs to be changed
 ## Either use the PHAR or remove the problem dependencies and do a normal install
       # Moving the necessary tools to no-dev prevents dependency hell due to the lock file containing
       # packages locked at versions incompatible with the full range of supported PHP versions.
       # This move needs to happen while still on PHP 7.2 as otherwise Composer will reject it.
-      - name: Move the linting tools from dev to no-dev
-        run: composer require yoast/yoastcs --no-scripts
+#      - name: Move the linting tools from dev to no-dev
+#        run: composer require yoast/yoastcs --no-scripts
 
       - name: Remove the vendor directory
         run: rm -rf vendor/*
@@ -70,10 +98,10 @@ jobs:
 
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-composer-dependencies
-      - name: "Install Composer dependencies (lint tools and no-dev only)"
+      - name: "Install Composer dependencies"
         uses: ramsey/composer-install@v2
         with:
-          composer-options: "--no-dev --no-scripts"
+          composer-options: "--no-scripts"
 
       - name: Lint against parse errors
         run: composer lint -- --checkstyle | cs2pr
