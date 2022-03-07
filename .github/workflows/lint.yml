@@ -39,11 +39,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # The prefix-dependencies task only works on PHP 7.2 (and higher) and we need to prefix
-      # the dependencies which are included in the distributed code to make sure there
-      # are no parse errors in the adjusted code.
-      # Dependency injection compilation only works on PHP 7+.
-      # It makes use of reflection-based PHP code that only works on PHP 7+.
+      # For the purpose of linting the code, we need the `vendor-prefixed` directory to
+      # be created as the prefixed code should be linted to ensure there are no parse errors
+      # against any of the supported PHP versions.
+      # The prefix-dependencies task makes use of reflection-based PHP code that only works on PHP > 7.2.
       - name: Install PHP 7.x for generating the vendor_prefixed directory
         uses: shivammathur/setup-php@v2
         with:
@@ -68,8 +67,8 @@ jobs:
       #   prefixed versions is sufficient.
       # - The test utilities are dev dependencies. Removing these, so we don't need to work around
       #   the PHP version restrictions set by PHPUnit.
-      - name: Delete dependencies which are not cross-version compatible
-        run: composer remove --dev --no-scripts humbug/php-scoper league/oauth2-client
+#      - name: Delete dependencies which are not cross-version compatible
+#        run: composer remove --dev --no-scripts humbug/php-scoper league/oauth2-client
 
 #      - name: Regenerate the Composer autoload file
 #        run: composer du
@@ -86,8 +85,8 @@ jobs:
 #      - name: Move the linting tools from dev to no-dev
 #        run: composer require yoast/yoastcs --no-scripts
 
-      - name: Remove the vendor directory
-        run: rm -rf vendor/*
+#      - name: Remove the vendor directory
+#        run: rm -rf vendor/*
 
       - name: Install PHP for the actual linting
         uses: shivammathur/setup-php@v2
@@ -99,10 +98,10 @@ jobs:
 
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-composer-dependencies
-      - name: Install Composer dependencies
-        uses: ramsey/composer-install@v2
-        with:
-          composer-options: "--no-scripts --ignore-platform-req=php"
+#      - name: Install Composer dependencies
+#        uses: ramsey/composer-install@v2
+#        with:
+#          composer-options: "--no-scripts --ignore-platform-req=php"
 
       - name: Lint against parse errors
         run: composer lint -- --checkstyle | cs2pr
